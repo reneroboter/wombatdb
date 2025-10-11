@@ -69,3 +69,10 @@ CREATE TABLE table_name (
 1. `brew install cunit` 
 1. `gcc -o tests tests.c -I/opt/homebrew/Cellar/cunit/2.1-3/include -L/opt/homebrew/Cellar/cunit/2.1-3/lib -lcunit` or `make tests`
 1. `./tests`
+
+## ToDos
+
+- Add a least one test for each SQL clause
+- Add praser to validate correctness of tokens and create AST from them
+- Execute AST
+- Add simple datbase as explained above 
