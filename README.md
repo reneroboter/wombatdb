@@ -72,6 +72,8 @@ CREATE TABLE table_name (
 
 ## ToDos
 
+- Add str_to_lower in is_keyword function for comparsion
+- Use termination char to end while loop
 - Add a least one test for each SQL clause
 - Add praser to validate correctness of tokens and create AST from them
 - Execute AST
