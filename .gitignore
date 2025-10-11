@@ -8,3 +8,4 @@ tokenizer.dSYM/*
 interpreter.dSYM/*
 main
 interpreter
+!interpreter.c

@@ -62,10 +62,10 @@ CREATE TABLE table_name (
 
 ## Getting started
 
-1. gcc interpreter.c tokenizer.c -o main
-2. ./main
+1. `gcc interpreter.c tokenizer.c -o main` or `make main`
+2. `./main`
 
 ### How to execute tests?
-1. brew install cunit 
-1. gcc -o tests tests.c -I/opt/homebrew/Cellar/cunit/2.1-3/include -L/opt/homebrew/Cellar/cunit/2.1-3/lib -lcunit
-1. ./tests
+1. `brew install cunit` 
+1. `gcc -o tests tests.c -I/opt/homebrew/Cellar/cunit/2.1-3/include -L/opt/homebrew/Cellar/cunit/2.1-3/lib -lcunit` or `make tests`
+1. `./tests`
