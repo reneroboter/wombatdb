@@ -1,0 +1,10 @@
+.vscode/*
+*.json
+*.txt
+*.csv
+*.md
+!README.md
+tokenizer.dSYM/*
+interpreter.dSYM/*
+main
+interpreter
