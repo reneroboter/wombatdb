@@ -91,6 +91,7 @@ void push_raw_token_to_list(RawTokenList *list, RawToken token) {
         }
     }
 
+    // I already have a copy, bc by value
     RawToken copy_token = token;
     copy_token.length = token.length;
     copy_token.value = malloc(token.length + 1);

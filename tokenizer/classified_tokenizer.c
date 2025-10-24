@@ -101,3 +101,43 @@ ClassifiedTokenList classified_tokenize(RawTokenList *raw_token_list)
     }
     return *classified_token_list;
 }
+
+void push_classified_token_to_list(ClassifiedTokenList *list, ClassifiedToken token) {
+    if (list->size >= list->capacity) {
+        list->capacity *= 2;
+        list->tokens = realloc(list->tokens, list->capacity * sizeof(ClassifiedToken));
+
+        if (list->tokens == NULL) {
+            perror("Failed to reallocate memory for classified tokens list!");
+            exit(-1);
+        }
+    }
+
+    ClassifiedToken copy_token = token;
+    copy_token.length = token.length;
+    copy_token.value = malloc(token.length + 1);
+
+    strcpy(copy_token.value, token.value);
+
+    list->tokens[list->size++] = token;
+}
+
+ClassifiedToken *create_new_classified_token() {
+    ClassifiedToken *classified_token = malloc(sizeof(ClassifiedToken));
+
+    if (classified_token == NULL) {
+        perror("Failed to allocate memory for raw token!");
+        exit(-1);
+    }
+
+    classified_token->length = 0;
+    classified_token->value = malloc(classified_token->length + 1);
+
+    if (classified_token->value == NULL) {
+        perror("Failed to allocate memory for classified_token token value!");
+        free(classified_token);
+        exit(-1);
+    }
+
+    return classified_token;
+}
