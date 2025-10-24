@@ -4,14 +4,12 @@
 #include "raw_tokenizer.h"
 
 int is_space(char c);
-
 int is_raw_operator(char c);
 
 RawToken *create_new_raw_token();
-
 void push_raw_token_to_list(RawTokenList *list, RawToken token);
 
-RawTokenList tokenizer(const char query[], size_t query_length) {
+RawTokenList raw_tokenize(const char query[]) {
     RawTokenList *raw_token_list = malloc(sizeof(RawTokenList));
 
     if (raw_token_list == NULL) {
@@ -27,7 +25,6 @@ RawTokenList tokenizer(const char query[], size_t query_length) {
         perror("Failed to allocate memory for tokens array!");
         exit(-1);
     }
-
 
     RawToken *raw_token = create_new_raw_token();
 
@@ -151,7 +148,7 @@ int main() {
         strcpy(query, data_provider[i]);
 
         //printf("RAW TOKEN: %d\n", i);
-        RawTokenList result = tokenizer(query, strlen(query) + 1);
+        RawTokenList result = raw_tokenize(query);
         for (int j = 0; j < result.size; j++) {
             printf("VALUE %d -> %s || ", j, result.tokens[j].value);
         }

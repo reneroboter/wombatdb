@@ -1,7 +1,7 @@
 #ifndef CLASSIFIED_TOKENIZER_H
 #define CLASSIFIED_TOKENIZER_H
 
-#include <stddef.h>
+#include "raw_tokenizer.h"
 
 typedef struct
 {
@@ -14,8 +14,9 @@ typedef struct
 {
     ClassifiedToken *tokens;
     size_t size;
+    size_t capacity;
 } ClassifiedTokenList;
 
-ClassifiedTokenList tokenizer(RawTokenList *raw_token_list);
+ClassifiedTokenList classified_tokenize(RawTokenList *raw_token_list);
 
 #endif

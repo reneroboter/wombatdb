@@ -1,8 +1,6 @@
 #ifndef RAW_TOKENIZER_H
 #define RAW_TOKENIZER_H
 
-#include <stddef.h>
-
 typedef struct
 {
     char *value;
@@ -16,6 +14,6 @@ typedef struct
     size_t capacity;
 } RawTokenList;
 
-RawTokenList tokenizer(const char query[], size_t query_length);
+RawTokenList raw_tokenize(const char query[]);
 
 #endif
