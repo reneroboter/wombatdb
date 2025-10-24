@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "classified_tokenizer.h"
+#include "raw_tokenizer.h"
 
 int is_delimiter(RawToken *current_raw_token);
 int is_keyword(RawToken *current_raw_token);
@@ -9,7 +10,6 @@ int is_identifier(RawToken *current_raw_token);
 
 ClassifiedTokenList tokenizer(RawTokenList *raw_token_list);
 {
-    // todo how to do dynamically allocate memory?!
     ClassifiedTokenList classified_token_list;
     classified_token_list.size = 0;
 

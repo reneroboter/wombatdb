@@ -39,11 +39,11 @@ RawTokenList tokenizer(const char query[], size_t query_length)
         if (is_space(current_char))
         {
             if (raw_token->length > 0) {
-            raw_token->value[raw_token->length] = '\0';
-            push_raw_token_to_list(raw_token_list, *raw_token);
-            free(raw_token->value);
-            free(raw_token);
-            raw_token = create_new_raw_token();
+                raw_token->value[raw_token->length] = '\0';
+                push_raw_token_to_list(raw_token_list, *raw_token);
+                free(raw_token->value);
+                free(raw_token);
+                raw_token = create_new_raw_token();
             }
             i++;
             continue;
@@ -54,10 +54,10 @@ RawTokenList tokenizer(const char query[], size_t query_length)
             // previous token e.g "name,"
             // store "name"
             if (raw_token->length > 0) {
-            raw_token->value[raw_token->length] = '\0';
-            push_raw_token_to_list(raw_token_list, *raw_token);
-            free(raw_token->value);
-            free(raw_token);
+                raw_token->value[raw_token->length] = '\0';
+                push_raw_token_to_list(raw_token_list, *raw_token);
+                free(raw_token->value);
+                free(raw_token);
             }
 
             // store ","
