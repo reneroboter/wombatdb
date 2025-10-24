@@ -13,6 +13,7 @@ typedef struct
 {
     RawToken *tokens;
     size_t size;
+    size_t capacity;
 } RawTokenList;
 
 RawTokenList tokenizer(const char query[], size_t query_length);
