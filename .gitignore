@@ -4,8 +4,7 @@
 *.csv
 *.md
 !README.md
-tokenizer.dSYM/*
-interpreter.dSYM/*
+*.dSYM/*
 main
 interpreter
 !interpreter.c
