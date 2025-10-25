@@ -58,9 +58,9 @@ CREATE TABLE table_name (
    ....
 );
 ```
-**NOTE:** No support plannend for datatypes. 
+**NOTE:** No support planned for datatypes. 
 
-## Getting started
+## Getting started (outdated)
 
 1. `gcc interpreter.c tokenizer.c -o main` or `make main`
 2. `./main`
@@ -74,7 +74,7 @@ CREATE TABLE table_name (
 
 - Add str_to_lower in is_keyword function for comparsion
 - Use termination char to end while loop
-- Add a least one test for each SQL clause
-- Add praser to validate correctness of tokens and create AST from them
+- Add at least one test for each SQL clause
+- Add parser to validate correctness of tokens and create AST from them
 - Execute AST
-- Add simple datbase as explained above 
+- Add simple database as explained above 
