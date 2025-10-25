@@ -39,7 +39,7 @@ ClassifiedTokenList* classified_tokenize(RawTokenList *raw_token_list)
         RawToken current_raw_token = raw_token_list->tokens[j];
         if (is_keyword(&current_raw_token))
         {
-            strcpy(classified_token->type, "KEYWORD");
+            classified_token->type = TOKEN_KEYWORD;
             strcpy(classified_token->value, current_raw_token.value);
             classified_token->length = current_raw_token.length;
 
@@ -54,7 +54,7 @@ ClassifiedTokenList* classified_tokenize(RawTokenList *raw_token_list)
 
         if (is_operator(&current_raw_token))
         {
-            strcpy(classified_token->type, "OPERATOR");
+            classified_token->type = TOKEN_OPERATOR;
             strcpy(classified_token->value, current_raw_token.value);
             classified_token->length = current_raw_token.length;
 
@@ -69,7 +69,7 @@ ClassifiedTokenList* classified_tokenize(RawTokenList *raw_token_list)
 
         if (is_delimiter(&current_raw_token))
         {
-            strcpy(classified_token->type, "DELIMITER");
+            classified_token->type = TOKEN_DELIMITER;
             strcpy(classified_token->value, current_raw_token.value);
             classified_token->length = current_raw_token.length;
 
@@ -86,7 +86,7 @@ ClassifiedTokenList* classified_tokenize(RawTokenList *raw_token_list)
         if (is_identifier(&current_raw_token))
         {
 
-            strcpy(classified_token->type, "IDENTIFIER");
+            classified_token->type = TOKEN_IDENTIFIER;
             strcpy(classified_token->value, current_raw_token.value);
             classified_token->length = current_raw_token.length;
 
@@ -178,7 +178,7 @@ int is_delimiter(RawToken *current_raw_token) {
 
 int is_keyword(RawToken *current_raw_token)
 {
-    char copy[current_raw_token->length];
+    char *copy = malloc(current_raw_token->length + 1);
     strcpy(copy, current_raw_token->value);
 
     for(int i = 0; copy[i]; i++){

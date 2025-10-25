@@ -3,10 +3,18 @@
 
 #include "raw_tokenizer.h"
 
+typedef enum {
+    TOKEN_IDENTIFIER,
+    TOKEN_KEYWORD,
+    TOKEN_NUMBER,
+    TOKEN_OPERATOR,
+    TOKEN_DELIMITER
+} TokenType;
+
 typedef struct
 {
     char *value;
-    char *type; // todo use enum 
+    TokenType type;
     size_t length;
 } ClassifiedToken;
 
