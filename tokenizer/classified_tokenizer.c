@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "classified_tokenizer.h"
 #include <ctype.h>
+#include "classified_tokenizer.h"
+
 
 int is_delimiter(RawToken *current_raw_token);
 int is_keyword(RawToken *current_raw_token);
@@ -12,7 +13,7 @@ int is_identifier(RawToken *current_raw_token);
 ClassifiedToken *create_new_classified_token();
 void push_classified_token_to_list(ClassifiedTokenList *list, ClassifiedToken token);
 
-ClassifiedTokenList classified_tokenize(RawTokenList *raw_token_list)
+ClassifiedTokenList* classified_tokenize(RawTokenList *raw_token_list)
 {
     ClassifiedTokenList *classified_token_list = malloc(sizeof(ClassifiedTokenList));
 
@@ -100,18 +101,31 @@ ClassifiedTokenList classified_tokenize(RawTokenList *raw_token_list)
         fprintf(stderr, "Could not classify current token! %s\n", current_raw_token.value);
         exit(-1);
     }
-    return *classified_token_list;
+    return classified_token_list;
+}
+
+void free_classified_token_list(ClassifiedTokenList *list) {
+    for (int i = 0; i < list->size; i++) {
+        free(list->tokens[i].value);
+    }
+
+    free(list->tokens);
+
+    list->tokens = NULL;
+    list->size = 0;
+    list->capacity = 0;
 }
 
 void push_classified_token_to_list(ClassifiedTokenList *list, ClassifiedToken token) {
     if (list->size >= list->capacity) {
         list->capacity *= 2;
-        list->tokens = realloc(list->tokens, list->capacity * sizeof(ClassifiedToken));
+        ClassifiedToken *new_tokens = realloc(list->tokens, list->capacity * sizeof(ClassifiedToken));
 
-        if (list->tokens == NULL) {
+        if (new_tokens == NULL) {
             perror("Failed to reallocate memory for classified tokens list!");
             exit(-1);
         }
+        list->tokens = new_tokens;
     }
 
     ClassifiedToken copy_token = token;
@@ -187,37 +201,6 @@ int is_keyword(RawToken *current_raw_token)
            strcmp(copy, "table") == 0;
 }
 
-int main() {
-    RawTokenList *raw_token_list = malloc(sizeof(RawTokenList));
-    raw_token_list->size = 1;
-    raw_token_list->capacity = 11;
-    raw_token_list->tokens = malloc(raw_token_list->capacity * sizeof(RawToken));
-
-    // "SELECT name, age FROM wombats WHERE age > 3;",
-    const char *token[] = {
-        "SELECT",
-        "name",
-        ",",
-        "age",
-        "FROM",
-        "wombats",
-        "WHERE",
-        "age",
-        ">",
-        "3",
-        ";"
-    };
-
-    int token_size = sizeof(token) / sizeof(token[0]);
-
-    for (int i = 0; i < token_size; i++) {
-        printf("%s\n", token[i]);
-        RawToken raw_token;
-        raw_token.value = strcpy(raw_token.value, token[i]);
-        raw_token.length = strlen(raw_token.value);
-        raw_token_list->tokens[raw_token_list->size++] = raw_token;
-    }
-
-    ClassifiedTokenList result = classified_tokenize(raw_token_list);
+int is_identifier(RawToken *current_raw_token) {
     return 0;
 }

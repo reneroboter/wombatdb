@@ -17,6 +17,6 @@ typedef struct
     size_t capacity;
 } ClassifiedTokenList;
 
-ClassifiedTokenList classified_tokenize(RawTokenList *raw_token_list);
-
+ClassifiedTokenList* classified_tokenize(RawTokenList *raw_token_list);
+void free_classified_token_list(ClassifiedTokenList *list);
 #endif
