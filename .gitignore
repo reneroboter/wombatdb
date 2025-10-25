@@ -1,11 +1,8 @@
 .vscode/*
 .idea/*
-*.json
-*.txt
-*.csv
-*.md
-!README.md
 *.dSYM/*
 main
 interpreter
 !interpreter.c
+files
+database
