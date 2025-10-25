@@ -1,0 +1,38 @@
+q1: What is a pointer?
+a: A pointer is a variable that point to a memory address
+
+q2: When is a pointer dereferenced?
+a: A pointer dereference copied the value of a pointer to a value?
+
+q3: When is a pointer copied?
+with pointer dereference?
+
+q4: What is malloc?
+a: malloc allocates a block of memory by a given size. The memory is uninitialized.
+
+q5: What is calloc?
+a: allocates memory for a number of object with a given size for each object.
+Its initializes all bytes to zero.
+
+q6: What is realloc?
+It's resized a previously allocated memory block. If pointer is NULL it behaves like malloc (true??)
+The old memory should not be freed before calling realloc
+
+q7: What is memcpy?
+it copies a source to the destination by a given size
+
+q8: What is a memory leak?
+not freed memory
+q9: What is a linker?
+
+it combines object to a single executable
+
+q10: How do you handle memory allocation?
+
+q11: What is &
+address-of operator that give the memory address of a varaibel
+
+q12: What is the difference between strcpy and memcpy
+memcpy copies by a given size, strcpy until null termination is reached '\0'
+q13: What is strcpy
+it copies a string. it copies a source to a destination until null termination is reached '\0'
