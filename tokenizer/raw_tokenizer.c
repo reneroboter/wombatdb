@@ -29,7 +29,7 @@ RawTokenList* raw_tokenize(const char query[]) {
     int i = 0;
 
     while (query[i] != '\0') {
-        char current_char = query[i];
+        const char current_char = query[i];
 
         if (is_space(current_char)) {
             if (raw_token->length > 0) {
@@ -83,7 +83,7 @@ RawTokenList* raw_tokenize(const char query[]) {
 
     return raw_token_list;
 }
-void push_char_to_current_token(RawToken *token, char c) {
+void push_char_to_current_token(RawToken *token, const char c) {
     if (token->length >= token->capacity) {
         token->capacity *= 2;
         char *new_value = realloc(token->value, token->capacity * sizeof(char));
@@ -109,7 +109,7 @@ void free_raw_token_list(RawTokenList *list) {
     list->capacity = 0;
 }
 
-void push_raw_token_to_list(RawTokenList *list, RawToken token) {
+void push_raw_token_to_list(RawTokenList *list, const RawToken token) {
     if (list->size >= list->capacity) {
         list->capacity *= 2;
         RawToken *new_tokens = realloc(list->tokens, list->capacity * sizeof(RawToken));
