@@ -6,10 +6,8 @@
 int is_space(char c);
 int is_raw_operator(char c);
 
-RawToken *create_new_raw_token();
-void push_raw_token_to_list(RawTokenList *list, RawToken token);
-
-RawTokenList raw_tokenize(const char query[]) {
+RawTokenList* raw_tokenize(const char query[]) {
+    // calloc
     RawTokenList *raw_token_list = malloc(sizeof(RawTokenList));
 
     if (raw_token_list == NULL) {
@@ -57,7 +55,6 @@ RawTokenList raw_tokenize(const char query[]) {
 
             // store ","
             raw_token = create_new_raw_token();
-            raw_token->value = realloc(raw_token->value, raw_token->length + 2);
             raw_token->value[raw_token->length++] = current_char;
             raw_token->value[raw_token->length] = '\0';
             push_raw_token_to_list(raw_token_list, *raw_token);
@@ -71,32 +68,71 @@ RawTokenList raw_tokenize(const char query[]) {
             continue;
         }
 
-        raw_token->value = realloc(raw_token->value, raw_token->length + 2);
-        raw_token->value[raw_token->length++] = current_char;
+        push_char_to_current_token(raw_token, current_char);
 
         i++;
     }
 
-    return *raw_token_list;
+    // check if token still exists
+    if (raw_token->length > 0) {
+        raw_token->value[raw_token->length] = '\0';
+        push_raw_token_to_list(raw_token_list, *raw_token);
+        free(raw_token->value);
+        free(raw_token);
+    }
+
+    return raw_token_list;
+}
+void push_char_to_current_token(RawToken *token, char c) {
+    if (token->length >= token->capacity) {
+        token->capacity *= 2;
+        char *new_value = realloc(token->value, token->capacity * sizeof(char));
+
+        if (new_value == NULL) {
+            perror("Failed to reallocate memory for raw token value!");
+            exit(-1);
+        }
+        token->value = new_value;
+
+    }
+    token->value[token->length++] = c;
+}
+void free_raw_token_list(RawTokenList *list) {
+    for (int i = 0; i < list->size; i++) {
+        free(list->tokens[i].value);
+    }
+
+    free(list->tokens);
+
+    list->tokens = NULL;
+    list->size = 0;
+    list->capacity = 0;
 }
 
 void push_raw_token_to_list(RawTokenList *list, RawToken token) {
     if (list->size >= list->capacity) {
         list->capacity *= 2;
-        list->tokens = realloc(list->tokens, list->capacity * sizeof(RawToken));
+        RawToken *new_tokens = realloc(list->tokens, list->capacity * sizeof(RawToken));
 
-        if (list->tokens == NULL) {
+        if (new_tokens == NULL) {
             perror("Failed to reallocate memory for raw tokens list!");
             exit(-1);
         }
+        list->tokens = new_tokens;
     }
 
-    // I already have a copy, bc by value
-    RawToken copy_token = token;
+    // I already have a copy, bc by value, but the token value is a pointer!
+    RawToken copy_token;
     copy_token.length = token.length;
+    copy_token.capacity = token.capacity;
     copy_token.value = malloc(token.length + 1);
 
-    strcpy(copy_token.value, token.value);
+    if (copy_token.value == NULL) {
+        perror("Failed to allocate memory for copy token!");
+        exit(-1);
+    }
+
+    memcpy(copy_token.value, token.value, token.length + 1);
 
     list->tokens[list->size++] = copy_token;
 }
@@ -110,7 +146,8 @@ RawToken *create_new_raw_token() {
     }
 
     raw_token->length = 0;
-    raw_token->value = malloc(raw_token->length + 1);
+    raw_token->capacity = 4;
+    raw_token->value = malloc(raw_token->capacity);
 
     if (raw_token->value == NULL) {
         perror("Failed to allocate memory for raw token value!");
@@ -127,33 +164,4 @@ int is_space(const char c) {
 
 int is_raw_operator(const char c) {
     return c == '>' || c == '<' || c == '=' || c == '(' || c == ')' || c == ',' || c == ';';
-}
-
-int main() {
-    char *data_provider[] = {
-        "SELECT name, age FROM wombats WHERE age > 3;",
-        "SELECT name,age FROM wombats WHERE age > 4;",
-        "SELECT  name,age  FROM wombats WHERE age > 5;",
-        "SELECT name, age FROM     wombats WHERE age>6;",
-        "SELECT     name, age FROM     wombats WHERE age     >7;",
-        "SELECT name, age FROM wombats WHERE age > 7 ORDER BY age ASC;",
-        "SELECT name, age FROM wombats WHERE age > 7 ORDER BY age ASC LIMIT 1 OFFSET 2;",
-        "INSERT INTO table_name (column1, column2, column3) VALUES (value1, value2, value3);",
-        "CREATE TABLE table_name (column1, column2, column3);"
-    };
-
-    int data_provider_count = sizeof(data_provider) / sizeof(data_provider[0]);
-
-    for (int i = 0; i < data_provider_count; i++) {
-        char query[256];
-        strcpy(query, data_provider[i]);
-
-        //printf("RAW TOKEN: %d\n", i);
-        RawTokenList result = raw_tokenize(query);
-        for (int j = 0; j < result.size; j++) {
-            printf("VALUE %d -> %s || ", j, result.tokens[j].value);
-        }
-        printf("\n");
-    }
-    return 0;
 }
