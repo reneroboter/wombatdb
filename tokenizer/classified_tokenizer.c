@@ -34,7 +34,7 @@ ClassifiedTokenList* classified_tokenize(RawTokenList *raw_token_list)
     ClassifiedToken *classified_token = create_new_classified_token();
 
     int j = 0;
-    while (j < raw_token_list->size - 1)
+    while (j < raw_token_list->size)
     {
         RawToken current_raw_token = raw_token_list->tokens[j];
         if (is_keyword(&current_raw_token))
@@ -134,7 +134,7 @@ void push_classified_token_to_list(ClassifiedTokenList *list, ClassifiedToken to
 
     strcpy(copy_token.value, token.value);
 
-    list->tokens[list->size++] = token;
+    list->tokens[list->size++] = copy_token;
 }
 
 ClassifiedToken *create_new_classified_token() {
@@ -201,6 +201,23 @@ int is_keyword(RawToken *current_raw_token)
            strcmp(copy, "table") == 0;
 }
 
+int is_ascii_sign(char c) {
+    return c >= 0 && c <= 127;
+}
+
 int is_identifier(RawToken *current_raw_token) {
-    return 0;
+
+    if (isdigit((unsigned char)*current_raw_token->value)) {
+        return 1;
+    }
+    int value_length = 0;
+    value_length = strlen(current_raw_token->value);
+
+    for (int i = 0; i < value_length; i++) {
+        if (!is_ascii_sign(current_raw_token->value[i])) {
+            return 0;
+        }
+    }
+
+    return 1;
 }
