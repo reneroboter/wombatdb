@@ -1,0 +1,84 @@
+Q1: What is a pointer? ✅
+A: A pointer stores the memory address.
+
+Q2: What is the dereference of a pointer? ✅
+A: Accessing/manipulating the content that is stored in the memory address is called dereferencing the pointer.
+You can use the indirection operator (*) for that.
+
+Q3: How can I copy the value of a pointer variable? ✅
+A: With the dereference/indirection operator (*)
+
+Q4: What is malloc? ✅
+A: malloc allocates a block of memory of a given size. The memory is uninitialized.
+
+Q5: What is calloc? ✅
+A: allocates memory for a number of objects with a given size for each object.
+It initializes all bytes to zero.
+
+Q6: What is realloc? ✅
+A: It is resizing a previously allocated memory block. If the pointer is NULL, it behaves like malloc.
+The old memory should not be freed before calling realloc.
+
+Q7: What is memcpy? ✅
+A: It copies a source to the destination by a given size.
+
+Q8: What is a memory leak? ✅
+A: not freed memory
+
+Q9: What is a linker? ✅
+A: It combines objects into a single executable.
+
+Q10: How do you handle memory allocation?
+- You create a pointer variable like: int *ptX;
+- You use malloc/calloc to dynamically allocate memory like: ptx = malloc(4 * sizeof(int)) or ptx = calloc(4, sizeof(int)
+- You check if the pointer is not null -> otherwise you throw an error (can occur if a contagious memory block couldn't allocate)
+- You do your stuff ...
+- After usage you have to free the memory to prevent a memory leak
+- After freed, you should assign the pointer to NULL to avoid a dangling pointer
+
+Q11: What is &
+A:address-of operator that gives the memory address of a variable
+
+Q12: What is the difference between strcpy and memcpy
+A: memcpy copies by a given size, and strcpy until null termination is reached '\0'
+
+Q13: What is strcpy
+A: It copies a string. It copies a source to a destination until null termination ('\0') is reached.
+
+Q14: What is the difference between stack and heap allocation?
+
+Q14.1 What is stack allocation?
+- assigning memory for local variables and functions call in the call stack
+- it's freed immediately when the function ends
+- memory is managed by the system -> its fast and efficient, but with limited space compared to heap allocation
+- to many function calls exceed the stack capacity -> resulting in stackoverflow
+int main() {
+
+  // All these variables get memory
+  // allocated on stack
+  int a;
+  int b[10];
+  int n = 20;
+  int c[n];
+}
+
+Q14.2 What is the heap allocation?
+- it's allocated dynamically during program execution
+- it's not freed after usage compared to stack memory
+- it's requires a manual deallocation or a garbage collector
+- heap allocation is less safe, than stack allocation is accessible by multiple threads (data corruption/memory leaks)
+int main()
+{
+   // This memory for 10 integers
+   // is allocated on heap.
+   int *ptr  = new int[10];
+}
+
+Q15: dangling pointer,
+- A pointer that is not reassign to NULL
+
+Q16: What is fragmentation
+
+Q17: What is allocation failure
+
+Q18: What is the call stack
