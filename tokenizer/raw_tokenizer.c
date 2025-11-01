@@ -7,7 +7,7 @@ int is_space(char c);
 int is_raw_operator(char c);
 
 RawTokenList* raw_tokenize(const char query[]) {
-    // calloc
+    // calloc für die zero bytes initalisierung?!
     RawTokenList *raw_token_list = malloc(sizeof(RawTokenList));
 
     if (raw_token_list == NULL) {
@@ -163,5 +163,6 @@ int is_space(const char c) {
 }
 
 int is_raw_operator(const char c) {
+    // add >=, <=, != -> how to handle it, because its contagious
     return c == '>' || c == '<' || c == '=' || c == '(' || c == ')' || c == ',' || c == ';';
 }

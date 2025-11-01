@@ -15,6 +15,7 @@ void push_classified_token_to_list(ClassifiedTokenList *list, ClassifiedToken to
 
 ClassifiedTokenList* classified_tokenize(RawTokenList *raw_token_list)
 {
+    // calloc für die zero bytes initalisierung?!
     ClassifiedTokenList *classified_token_list = malloc(sizeof(ClassifiedTokenList));
 
     if (classified_token_list == NULL) {
@@ -178,6 +179,7 @@ int is_delimiter(RawToken *current_raw_token) {
 
 int is_keyword(RawToken *current_raw_token)
 {
+    // todo copy needs to be freed, otherwise memory leak
     char *copy = malloc(current_raw_token->length + 1);
     strcpy(copy, current_raw_token->value);
 
